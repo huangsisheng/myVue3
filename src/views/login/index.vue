@@ -37,7 +37,7 @@
         />
       </a-form-item>
       <a-form-item>
-        <a-button type="primary" html-type="submit" @click="onSubmit">
+        <a-button type="primary" html-type="submit" @click="onSubmit" @keyup.enter="onSubmit">
           登录
         </a-button>
       </a-form-item>
@@ -48,7 +48,7 @@
 <script>
 import { getCurrentInstance, reactive, toRefs } from "vue";
 import { useRouter } from "vue-router";
-
+import { mapGetters } from "vuex";
 export default {
   data() {
     return {
@@ -66,12 +66,18 @@ export default {
       },
     };
   },
+    computed:{
+        ...mapGetters('user',{
+            todos:'doneTodos'
+        })
+    },
   methods: {
     onSubmit() {
+    console.log(this.todos)
       this.$refs.ruleForm
         .validate()
         .then(() => {
-          this.$router.push("home");
+          this.$router.push("dashedbord");
         })
         .catch((error) => {
           console.log("error", error);

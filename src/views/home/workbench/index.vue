@@ -1,14 +1,12 @@
 <template>
     <div class="">
-        首页
+        工作台
     </div>
 </template>
 
 <script>
 export default {
-    created(){
-        console.log(this.$route)
-    }
+
 };
 </script>
 

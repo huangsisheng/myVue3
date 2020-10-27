@@ -1,5 +1,17 @@
 import { createRouter,createWebHashHistory } from "vue-router";
-import Home from "../views/home/index.vue";
+import Layout from "@/layout"
+
+/* 导入路由模块 */
+const modules = require.context('./routerModule', true, /[a-zA-Z]\w+\.(js)$/)
+
+let routerModule = {}
+modules.keys().forEach((file) => {
+    const fileName = file.replace(/(\.\/)(\w+)(\/\w+(.js))$/g, '$2')
+
+    const fileModule = modules(file).default
+
+    routerModule[fileName] = fileModule
+})
 
 const routes = [
     {
@@ -7,18 +19,20 @@ const routes = [
         path:'/login',
         component: () => import(/* webpackChunkName: "login" */ '@/views/login/index.vue'),
         meta:{
-            title:'首页'
+            title:'登录页'
         }
     },
     {
-        name:'home',
-        path:'/',
-        component: Home,
-        meta:{
-            title:'首页'
-        }
+        name:'dashedbord',
+        path:'/dashedbord',
+        component: Layout,
+        redirect:{path:'/home'},
+        children:[
+            ...Object.values(routerModule)
+        ]
     }
 ]
+localStorage.setItem('menuList', JSON.stringify(routerModule))
 
 const router = createRouter({
     history: createWebHashHistory(),

@@ -1,14 +1,25 @@
 <template>
     <div class="">
-        首页
+
     </div>
 </template>
 
 <script>
 export default {
-    created(){
-        console.log(this.$route)
-    }
+    data() {
+        return {
+
+        };
+    },
+    computed: {
+
+    },
+    created() {
+
+    },
+    methods: {
+
+    },
 };
 </script>
 
