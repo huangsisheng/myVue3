@@ -23,6 +23,11 @@ const routes = [
         }
     },
     {
+        name: '',
+        path: '/',
+        component: Layout,
+    },
+    {
         name:'dashedbord',
         path:'/dashedbord',
         component: Layout,

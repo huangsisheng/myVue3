@@ -8,14 +8,22 @@ const homeRouter = {
     meta: {
         title: '首页'
     },
-    children: {
-        name: 'workbench',
-        path: 'workbench',
-        component: () => import(/* webpackChunkName: "workbench" */ '@/views/home/workbench/index.vue'),
-        meta: {
-            title: '工作台'
-        }
-    }
+    children: [
+        {
+            name: 'home',
+            path: '/home',
+            component: Home,
+            meta: {
+                title: '首页'
+            },
+        }, {
+            name: 'workbench',
+            path: 'workbench',
+            component: () => import(/* webpackChunkName: "workbench" */ '@/views/home/workbench/index.vue'),
+            meta: {
+                title: '工作台'
+            }
+        }]
 }
 
 export default homeRouter

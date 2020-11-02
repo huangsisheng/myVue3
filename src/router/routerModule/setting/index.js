@@ -3,6 +3,9 @@ const settingRouter = {
     name: 'setting',
     path: '/setting',
     component: () => import(/* webpackChunkName: "setting" */ '@/views/setting/index.vue'),
+    meta: {
+        title: '基础设置'
+    },
     children: [
         {
             name: 'userManagement',
