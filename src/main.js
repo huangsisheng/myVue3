@@ -6,13 +6,16 @@ import store from "./store";
 import Antd from 'ant-design-vue';
 import 'ant-design-vue/dist/antd.less';
 import "assets/css/index.less";
-
 import VueParticles from 'vue-particles'
 
 const app = createApp(App)
 
 app.config.devtools = process.env.NODE_ENV === 'development'
 app.config.productionTip = false;
+
+/* 挂载静态方法 */
+import Plugins from "@/plugin"
+new Plugins(app)
 
 app
     .use(router)

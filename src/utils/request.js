@@ -21,7 +21,7 @@ instance.interceptors.response.use(function (response) {
     return response;
 }, function (error) {
     if (error.data.code === 400 || error.data.code === 401){
-        const { router } = useRouter()
+        const router = useRouter
         router.replace({path:'/login'})
     }
     // 对响应错误做点什么

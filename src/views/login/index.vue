@@ -37,7 +37,12 @@
         />
       </a-form-item>
       <a-form-item>
-        <a-button type="primary" html-type="submit" @click="onSubmit" @keyup.enter="onSubmit">
+        <a-button
+          type="primary"
+          html-type="submit"
+          @click="onSubmit"
+          @keyup.enter="onSubmit"
+        >
           登录
         </a-button>
       </a-form-item>
@@ -66,14 +71,14 @@ export default {
       },
     };
   },
-    computed:{
-        ...mapGetters('user',{
-            todos:'doneTodos'
-        })
-    },
+  computed: {
+    ...mapGetters("user", {
+      todos: "doneTodos",
+    }),
+  },
   methods: {
     onSubmit() {
-    console.log(this.todos)
+      console.log(this.todos);
       this.$refs.ruleForm
         .validate()
         .then(() => {

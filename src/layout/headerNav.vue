@@ -1,16 +1,24 @@
 <template>
   <div class="header-nav-wrap">
-    <a-button type="text" @click="toggleCollapsed" style="margin-bottom: 16px">
-      <MenuUnfoldOutlined v-if="collapsed" />
-      <MenuFoldOutlined v-else />
-    </a-button>
-    <a-tabs @change="handlChangeRoute">
-      <a-tab-pane v-for="(route, index) in menuList" :key="index">
-        <template v-slot:tab>
-          <span> {{ route.meta.title }} </span>
-        </template>
-      </a-tab-pane>
-    </a-tabs>
+    <section class="header-nav-wrap-lt">
+      <div @click="toggleCollapsed" style="cursor: pointer; margin-top: -13px">
+        <MenuUnfoldOutlined v-if="collapsed" />
+        <MenuFoldOutlined v-else />
+      </div>
+      <a-tabs @change="handlChangeRoute">
+        <a-tab-pane v-for="(route, index) in menuList" :key="index">
+          <template v-slot:tab>
+            <span> {{ route.meta.title }} </span>
+          </template>
+        </a-tab-pane>
+      </a-tabs>
+    </section>
+    <section class="header-nav-wrap-rt"></section>
+  </div>
+  <div class="header-route-wrap">
+    <section>
+      <a-tag closable @close="closeRouteTag"> Tag 2 </a-tag>
+    </section>
   </div>
 </template>
 
@@ -18,6 +26,7 @@
 import storage from "@/utils/localStorage";
 import { computed, getCurrentInstance, reactive, toRefs } from "vue";
 import { MenuFoldOutlined, MenuUnfoldOutlined } from "@ant-design/icons-vue";
+import { mapActions } from "vuex";
 export default {
   components: {
     MenuFoldOutlined,
@@ -25,36 +34,52 @@ export default {
   },
   setup() {
     const { ctx } = getCurrentInstance();
+
     const state = reactive({
-      activeKey: 1,
+      activeKey: "home",
       collapsed: false,
+      ...mapActions("user", ["setRouteList"]),
     });
 
     const menuList = computed(() => {
       return storage.get("menuList");
     });
-
     const handlChangeRoute = function (key) {
-      ctx.activeKey = key;
+      state.activeKey = key;
       const currRouter = ctx.menuList[key];
+      console.log(ctx);
+
+      ctx.setRouteList(currRouter.children);
+
       ctx.$router.push(currRouter.path);
     };
-    const toggleCollapsed = function () {
-      ctx.collapsed = !ctx.collapsed;
-      ctx.$emit("toggleCollapsed");
+    const toggleCollapsed = () => {
+      ctx.$mitt.emit("toggleCollapsed");
+      state.collapsed = !state.collapsed;
     };
+    const closeRouteTag = () => {
+        
+    }
 
     return {
       ...toRefs(state),
       menuList,
       handlChangeRoute,
+      toggleCollapsed,
     };
   },
 };
 </script>
 
 <style scoped lang="less">
-.header-nav-wrap {
+.header-nav-wrap,
+.header-route-wrap {
+  padding: 0 20px;
+}
+.header-nav-wrap,
+.header-nav-wrap-lt,
+.header-nav-wrap-rt,
+.header-route-wrap {
   display: flex;
   align-items: center;
 }

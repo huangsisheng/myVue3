@@ -11,7 +11,7 @@ const homeRouter = {
     children: [
         {
             name: 'home',
-            path: '/home',
+            path: 'home',
             component: Home,
             meta: {
                 title: '首页'

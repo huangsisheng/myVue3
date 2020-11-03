@@ -1,4 +1,4 @@
-import { createRouter,createWebHashHistory } from "vue-router";
+import { createRouter, createWebHashHistory } from "vue-router";
 import Layout from "@/layout"
 
 /* 导入路由模块 */
@@ -15,24 +15,25 @@ modules.keys().forEach((file) => {
 
 const routes = [
     {
-        name:'login',
-        path:'/login',
+        name: 'login',
+        path: '/login',
         component: () => import(/* webpackChunkName: "login" */ '@/views/login/index.vue'),
-        meta:{
-            title:'登录页'
+        meta: {
+            title: '登录页'
         }
     },
     {
         name: '',
         path: '/',
         component: Layout,
+        redirect: { path: '/dashedbord' },
     },
     {
-        name:'dashedbord',
-        path:'/dashedbord',
+        name: 'dashedbord',
+        path: '/dashedbord',
         component: Layout,
-        redirect:{path:'/home'},
-        children:[
+        redirect: { path: '/home' },
+        children: [
             ...Object.values(routerModule)
         ]
     }
@@ -44,7 +45,7 @@ const router = createRouter({
     routes
 })
 
-router.beforeEach((to,from,next) => {
+router.beforeEach((to, from, next) => {
     document.title = to.meta.title
     next()
 })
