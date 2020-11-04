@@ -33,7 +33,7 @@ import {
   watch,
 } from "vue";
 import { useRoute } from "vue-router";
-import { mapState } from "vuex";
+import { mapState, mapActions } from "vuex";
 
 export default {
   setup() {
@@ -44,6 +44,7 @@ export default {
       openKeys: [1],
       preOpenKeys: [1],
       ...mapState("user", ["routeList"]),
+      ...mapActions("user", ["setFastRouteList"]),
     });
     // 获取路由列表
     const routerList = computed(() => ctx.routeList());
@@ -57,13 +58,14 @@ export default {
       ctx.$mitt.on("toggleCollapsed", () => {
         state.collapsed = !state.collapsed;
         state.preOpenKeys = state.collapsed ? [] : state.preOpenKeys;
-        console.log(ctx);
       });
     });
 
     /* 函数 */
     const jump2page = function (rou) {
       ctx.$router.push({ name: rou.name });
+      ctx.setFastRouteList(rou);
+      console.log(ctx);
     };
     console.log(ctx);
     return {
