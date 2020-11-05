@@ -13,7 +13,12 @@
         </a-tab-pane>
       </a-tabs>
     </section>
-    <section class="header-nav-wrap-rt"></section>
+    <section class="header-nav-wrap-rt">
+      <span class="opre-btn" @click="toggleScreenSize">
+        <FullscreenExitOutlined v-if="isFullScreen"/>
+        <FullscreenOutlined v-else/>
+      </span>
+    </section>
   </div>
   <div class="header-route-wrap">
     <section class="header-route-wrap-lt">
@@ -34,12 +39,20 @@
 <script>
 import storage from "@/utils/localStorage";
 import { computed, getCurrentInstance, onMounted, reactive, toRefs } from "vue";
-import { MenuFoldOutlined, MenuUnfoldOutlined } from "@ant-design/icons-vue";
+import {
+  MenuFoldOutlined,
+  MenuUnfoldOutlined,
+  FullscreenOutlined,
+  FullscreenExitOutlined,
+} from "@ant-design/icons-vue";
+import FullScreen from "@/utils/fullScreen";
 import { mapActions, mapState } from "vuex";
 export default {
   components: {
     MenuFoldOutlined,
     MenuUnfoldOutlined,
+    FullscreenOutlined,
+    FullscreenExitOutlined,
   },
   setup() {
     const { ctx } = getCurrentInstance();
@@ -48,6 +61,7 @@ export default {
       activeKey: "home",
       activeR: "/home",
       collapsed: false,
+      isFullScreen:false,
       ...mapActions("user", ["setRouteList", "delFastRouteList"]),
       ...mapState("user", ["fastRouteList"]),
     });
@@ -80,6 +94,11 @@ export default {
       ctx.$mitt.emit("toggleCollapsed");
       state.collapsed = !state.collapsed;
     };
+    
+    const toggleScreenSize = () => {
+        state.isFullScreen = !state.isFullScreen
+        new FullScreen(state.isFullScreen)
+    };
 
     return {
       ...toRefs(state),
@@ -88,6 +107,7 @@ export default {
       toggleCollapsed,
       jump2page,
       delRoute,
+      toggleScreenSize
     };
   },
 };
@@ -97,6 +117,7 @@ export default {
 .header-nav-wrap,
 .header-route-wrap {
   padding: 0 20px;
+  justify-content: space-between;
 }
 .header-nav-wrap,
 .header-nav-wrap-lt,
@@ -106,5 +127,9 @@ export default {
 .header-route-wrap-rt {
   display: flex;
   align-items: center;
+}
+
+.opre-btn{
+    cursor: pointer;
 }
 </style>
