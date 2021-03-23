@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2020-11-13 14:37:27
- * @LastEditTime: 2021-03-23 14:42:30
+ * @LastEditTime: 2021-03-23 16:54:01
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \webpack_vue3\src\views\home\index.vue
@@ -28,7 +28,7 @@ export default {
   setup(context, props) {
     const state = reactive({
       canvasImageUrl:
-        "https://shinedata-edu.oss-cn-shanghai.aliyuncs.com/clock/recommend1.png",
+        "/dev/clock/recommend1.png",
     });
 
     const creactImg = async () => {
@@ -40,7 +40,7 @@ export default {
           logging: false,
           useCORS: true, //配置跨域
           allowTaint: true,
-          proxy: "https://shinedata-edu.oss-cn-shanghai.aliyuncs.com",
+        //   proxy: "/dev",
         }).then((canvas) => {
           const imgSrc = canvas.toDataURL("image/png");
           console.log(imgSrc)

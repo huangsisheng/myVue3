@@ -33,7 +33,7 @@ module.exports = {
         index: 'index.html',
         proxy: {
             [process.env.VUE_APP_BASE_URL]: {
-                target: 'http://localhost:8888',
+                target: 'https://shinedata-edu.oss-cn-shanghai.aliyuncs.com',
                 changeOrigin: true,
                 pathRewrite: {
                     ['^' + process.env.VUE_APP_BASE_URL]: ''
